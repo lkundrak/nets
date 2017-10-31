@@ -1,0 +1,128 @@
+=head1 NAME
+
+netsctl - Serial port over Telnet control tool
+
+=head1 SYNOPSIS
+
+B<netsctl> I<< <host> >> I<< <port> >> [I<< <option> >> I<< <value> >> ...]
+
+=head1 DESCRIPTION
+
+B<netsctl> sets or queries serial port settings of RFC 2217 enabled Telnet
+service.
+
+=head1 OPTIONS
+
+=over
+
+=item I<< <host> >>
+
+Hostname or address of a Telnet service.
+
+=item I<< <port> >>
+
+Service name or port number.
+
+=item I<< <option> >> I<< <value> >>|I<?>
+
+Get or set a particular option. A value of I<?> requests and print the current
+setting, other arguments set the option to a specified value. When no options
+are specified all options are queried and printed.
+
+The options are printed in the I<< <option> >> I<< <value> >> form, allowing
+their reuse as arguments to B<netsctl>.
+
+The valid options are:
+
+=over
+
+=item I<baudrate> I<< <rate> >>
+
+Baud Rate
+
+=item I<datasize> I<< <bits> >>
+
+Data Bit Size
+
+=item I<parity> I<NONE>|I<ODD>|I<EVEN>|I<MARK>
+
+Parity
+
+=item I<stopsize> I<< bits >>
+
+Stop Bit size
+
+=item I<flow> I<none>|I<xonxoff>|I<rtscts>
+
+Com Port Flow Control Setting (outbound/both)
+
+=item I<break> I<on>|I<off>
+
+BREAK State
+
+=item I<dtr> I<on>|I<off>
+
+DTR Signal State
+
+=item I<rts> I<on>|I<off>
+
+RTS Signal State
+
+=item I<flow_in> I<none>|I<xonxoff>|I<rtscts>| I<dtr>|I<dcd>|I<dsr>
+
+Com Port Flow Control Setting (inbound)
+
+=back
+
+=back
+
+=head1 EXAMPLES
+
+=over
+
+=item B<netsctl example.com telnet>
+
+Query all settings from a Telnet service running at I<example.net>.
+
+=item B<netsctl example.com telnet baudrate '?' flow '?'>
+
+Query baud rate and flow control settings from a Telnet service running at
+I<example.net>.
+
+=item B<netsctl example.com 23 baudrate 9600 datasize 8 parity NONE>
+
+Set baud rate, data size, and parity on Telnet service running on port 23 of
+I<example.net>.
+
+=item B<netsctl example.com telnet |xargs netsctl example.com 2323>
+
+Copy all settings from Telnet service running at I<example.net> to Telnet
+service running on port 23 of I<example.net>.
+
+=back
+
+=head1 BUGS
+
+Some servers reset the options when the client disconnects and this client
+always disconnects after setting the configuration. Thus, in effect, the
+settings will be lost.
+
+=head1 AUTHORS
+
+=over
+
+=item * Lubomir Rintel <L<lkundrak@v3.sk>>
+
+=back
+
+B<netsctl> can be redistributed under the terms of GNU General Public License
+(any version at your option).
+
+The source code repository can be obtained from
+L<https://github.com/lkundrak/nets>. Bug fixes and feature
+ehancements licensed under same conditions as netsctl are welcome
+via GIT pull requests.
+
+=head1 SEE ALSO
+
+L<nets(1)>.

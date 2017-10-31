@@ -1,0 +1,9 @@
+=head1 nets and netsctl
+
+This is a package that provides tools for sharing a serial port over a TCP/IP
+network with Telnet protocol with RFC 2217 serial port control extensions.
+
+Please refer to L<nets(1)> and L<netsctl(1)> manuals for details about the
+operation of the tools.
+
+=cut

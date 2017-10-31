@@ -1,0 +1,5 @@
+nets
+netsctl
+*.o
+*.1
+*.8

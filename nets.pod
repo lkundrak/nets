@@ -1,0 +1,97 @@
+=head1 NAME
+
+nets - Serial port over Telnet client tool
+
+=head1 SYNOPSIS
+
+B<nets> I<< <host> >> I<< <port> >> [I<< <link> >>|--] [I<< <command> >> ...]
+
+=head1 DESCRIPTION
+
+B<nets> creates a pseudo-terminal device and connects it to a Telnet service.
+It then either creates a symbolic link to it or passes it as an argument to a
+specified command. Alternatively, if neither link or commands are specified,
+it prints the device name.
+
+This is particularly useful for connecting tools designed to work with a
+terminal device of a regular serial port to a RFC 2217 network serial port
+service.
+
+=head1 OPTIONS
+
+=over
+
+=item I<< <host> >>
+
+Hostname or address of a Telnet service.
+
+=item I<< <port> >>
+
+Service name or port number.
+
+=item I<< <link> >>
+
+Create a symbolic link to a PTY after the network serial port device is
+connected. Useful in order to get a device file with known name.
+
+=item I<< <command> >> ...
+
+Run the specified command after the network serial port device is
+connected. All further arguments are passed to the given command followed by
+the pty name. If the C<{}> string is encountered it will be replaced with the
+path to the PTY device.
+
+When the command terminates the B<nets> terminates as well.
+
+=back
+
+=head1 EXAMPLES
+
+=over
+
+=item B<nets example.com telnet>
+
+Connect a PTY to Telnet service running at I<example.net> and print its name.
+
+=item B<nets example.com telnet /dev/modem>
+
+Connect a PTY to Telnet service running at I<example.net> and link the
+F</dev/modem> name to it.
+
+Useful for getting a known device name for tools that expect it.
+
+=item B<nets example.com 23 -- cu -l {}>
+
+Connect a PTY to a Telnet service running on port 23 of I<example.net> and pass
+it to C<cu -l> command.
+
+This essentially runs an interactive session connected to given Telnet service
+much like a regular telnet client.
+
+=item B<nets example.com 23 /dev/modem minicom>
+
+Connect a PTY to Telnet service running at I<example.net> and link the
+F</dev/modem> name to it and run a specified command. The PTY will be
+disconnected when the session terminates.
+
+=back
+
+=head1 AUTHORS
+
+=over
+
+=item * Lubomir Rintel <L<lkundrak@v3.sk>>
+
+=back
+
+B<nets> can be redistributed under the terms of GNU General Public License
+(any version at your option).
+
+The source code repository can be obtained from
+L<https://github.com/lkundrak/nets>. Bug fixes and feature
+ehancements licensed under same conditions as nets are welcome
+via GIT pull requests.
+
+=head1 SEE ALSO
+
+L<netsctl(1)>.
